@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Работа06 — Поиск работы и вакансий в Ингушетии</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f4f6f8;
+      color: #333;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto 30px auto;
+      padding: 15px 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0088cc;
+    }
+
+    .btn-main {
+      background-color: #0088cc;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-main:hover {
+      background-color: #006699;
+    }
+
+    /* Модальное окно */
+    .modal-overlay {
+      display: none; /* Скрыто по умолчанию */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-card {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 420px;
+      position: relative;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 26px;
+      font-weight: bold;
+      color: #aaa;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #333;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .role-options {
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .role-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .role-label:hover {
+      border-color: #0088cc;
+      background-color: #f0f8ff;
+    }
+
+    .btn-telegram {
+      width: 100%;
+      background-color: #24A1DE;
+      color: #fff;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn-telegram:hover {
+      background-color: #1d88be;
+    }
+
+    .status-text {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Работа06</div>
+    <button class="btn-main" onclick="openAuthModal()">Войти / Регистрация</button>
+  </header>
+
+  <!-- Модальное окно авторизации -->
+  <div id="authModal" class="modal-overlay">
+    <div class="modal-card">
+      <span class="close-btn" onclick="closeAuthModal()">&times;</span>
+      <h2 class="modal-title">Авторизация</h2>
+
+      <p style="text-align: center; color: #666; font-size: 14px;">Выберите, кто вы:</p>
+
+      <div class="role-options">
+        <label class="role-label">
+          <input type="radio" name="userRole" value="jobseeker" checked>
+          <span>👨‍💻 Соискатель (ищу работу)</span>
+        </label>
+        <label class="role-label">
+          <input type="radio" name="userRole" value="employer">
+          <span>💼 Работодатель (ищу сотрудника)</span>
+        </label>
+      </div>
+
+      <button class="btn-telegram" onclick="startTelegramAuth()">
+        📱 Подтвердить в Telegram
+      </button>
+
+      <div id="authStatus" class="status-text"></div>
+    </div>
+  </div>
+
+  <script>
+    const BOT_USERNAME = 'caucasusjob_bot'; // Точное имя твоего бота
+    const BACKEND_URL = 'http://localhost:3000'; // Сервер на порту 3000
+    let checkInterval = null;
+
+    function openAuthModal() {
+      document.getElementById('authModal').style.display = 'flex';
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').style.display = 'none';
+      if (checkInterval) clearInterval(checkInterval);
+    }
+
+    function startTelegramAuth() {
+      // 1. Генерируем уникальный код сессии
+      const sessionCode = 'sess_' + Math.random().toString(36).substring(2, 10);
+      const statusDiv = document.getElementById('authStatus');
+
+      statusDiv.innerHTML = '⏳ Ожидаем подтверждения в Telegram...';
+
+      // 2. Открываем бота с параметром deep linking
+      const telegramUrl = `https://t.me/${BOT_USERNAME}?start=${sessionCode}`;
+      window.open(telegramUrl, '_blank');
+
+      // 3. Каждые 2 секунды опрашиваем наш сервер
+      if (checkInterval) clearInterval(checkInterval);
+
+      checkInterval = setInterval(async () => {
+        try {
+          const response = await fetch(`${BACKEND_URL}/api/check-auth/${sessionCode}`);
+          const data = await response.json();
+
+          if (data.verified) {
+            clearInterval(checkInterval);
+            const role = document.querySelector('input[name="userRole"]:checked').value;
+
+            statusDiv.innerHTML = '✅ Успешно! Вы вошли как: ' + (role === 'jobseeker' ? 'Соискатель' : 'Работодатель');
+
+            setTimeout(() => {
+              alert(`Добро пожаловать, ${data.name}! Ваш номер: ${data.phone}`);
+              closeAuthModal();
+            }, 1000);
+          }
+        } catch (err) {
+          console.error('Ошибка проверки авторизации:', err);
+        }
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
