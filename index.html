@@ -217,7 +217,7 @@
       color: var(--text-main);
     }
 
-    /* Карточки специалистов/вакансий */
+    /* Карточки объявлений */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -234,6 +234,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      cursor: pointer;
     }
 
     .user-card:hover {
@@ -264,13 +265,11 @@
       color: var(--text-muted);
     }
 
-    .card-rating {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 12px;
+    .card-price {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
     }
 
     .card-desc {
@@ -278,6 +277,10 @@
       color: var(--text-muted);
       line-height: 1.5;
       margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .card-footer {
@@ -286,23 +289,6 @@
       align-items: center;
       border-top: 1px solid var(--border-color);
       padding-top: 12px;
-    }
-
-    .btn-rate {
-      background: transparent;
-      border: 1px solid var(--primary);
-      color: var(--primary);
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition-fast);
-    }
-
-    .btn-rate:hover {
-      background: var(--primary);
-      color: #ffffff;
     }
 
     /* Блок отсутствия карточек */
@@ -341,7 +327,7 @@
       margin: 0 auto 24px auto;
     }
 
-    /* Модальное окно авторизации и рейтинга */
+    /* Модальные окна */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -356,6 +342,8 @@
       justify-content: center;
       opacity: 0;
       transition: opacity 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
     }
 
     .modal-overlay.active {
@@ -367,8 +355,8 @@
       background-color: var(--card-bg);
       padding: 32px;
       border-radius: 16px;
-      width: 90%;
-      max-width: 420px;
+      width: 100%;
+      max-width: 480px;
       position: relative;
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
       transform: translateY(20px);
@@ -411,6 +399,51 @@
       margin-bottom: 24px;
     }
 
+    .form-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+      transition: var(--transition-fast);
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+
+    .phone-box {
+      background: #EBF5FF;
+      border: 1px solid #BEE3F8;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .phone-number {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 6px;
+    }
+
     .role-options {
       display: flex;
       flex-direction: column;
@@ -434,7 +467,6 @@
     .role-label:hover {
       border-color: var(--primary);
       background-color: #F8FAFC;
-      transform: translateX(4px);
     }
 
     .role-label input[type="radio"] {
@@ -463,50 +495,6 @@
 
     .btn-telegram:hover {
       background-color: #1D88BE;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(36, 161, 222, 0.35);
-    }
-
-    /* Звёздная система оценки */
-    .star-rating-select {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      direction: rtl;
-    }
-
-    .star-rating-select input {
-      display: none;
-    }
-
-    .star-rating-select label {
-      font-size: 32px;
-      color: #CBD5E1;
-      cursor: pointer;
-      transition: var(--transition-fast);
-    }
-
-    .star-rating-select label:hover,
-    .star-rating-select label:hover ~ label,
-    .star-rating-select input:checked ~ label {
-      color: var(--accent-star);
-    }
-
-    .review-textarea {
-      width: 100%;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 14px;
-      outline: none;
-      resize: vertical;
-      min-height: 80px;
-      margin-bottom: 16px;
-    }
-
-    .review-textarea:focus {
-      border-color: var(--primary);
     }
 
     .status-text {
@@ -515,10 +503,16 @@
       text-align: center;
       color: var(--text-muted);
       min-height: 20px;
-      transition: var(--transition-fast);
     }
 
-    /* Анимации */
+    .server-setting {
+      margin-top: 15px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -529,7 +523,6 @@
       50% { transform: scale(1.08); opacity: 1; }
     }
 
-    /* Подвал */
     footer {
       background-color: var(--card-bg);
       border-top: 1px solid var(--border-color);
@@ -550,10 +543,6 @@
       
       <div id="userBadge" class="user-profile-badge">
         👤 <span id="userName">Пользователь</span>
-        <div class="badge-rating">
-          <span class="star-icon">★</span>
-          <span id="userRatingVal">5.0</span>
-        </div>
         <button class="btn-logout-sm" onclick="logout()">Выйти</button>
       </div>
 
@@ -565,80 +554,43 @@
   <section class="hero-section">
     <div class="hero-container">
       <h1 class="hero-title">Найдите работу или сотрудника в Ингушетии</h1>
-      <p class="hero-subtitle">Единая платформа с прозрачной системой рейтинга и отзывов</p>
+      <p class="hero-subtitle">Единая бесплатная платформа для размещения вакансий и резюме</p>
       
       <div class="search-box">
-        <input type="text" class="search-input" placeholder="Должность, профессия или услуга...">
-        <button class="search-btn">Найти</button>
+        <input type="text" id="searchInput" class="search-input" placeholder="Должность, профессия или услуга..." oninput="filterAds()">
+        <button class="search-btn" onclick="filterAds()">Найти</button>
       </div>
     </div>
   </section>
 
   <!-- Основной блок -->
   <main>
-    <h2 class="section-title">Специалисты и вакансии</h2>
-    
-    <!-- Сетка объявлений с оценками -->
-    <div class="cards-grid" id="cardsGrid">
-      <!-- Пример карточки специалиста -->
-      <div class="user-card">
-        <div>
-          <div class="card-header">
-            <div class="card-title">Ибрагим М.</div>
-            <span class="card-role-tag">Мастер отделки</span>
-          </div>
-          <div class="card-rating">
-            <span class="star-icon">★</span>
-            <span>4.9</span>
-            <span style="color: var(--text-muted); font-weight: 400; font-size: 13px;">(12 отзывов)</span>
-          </div>
-          <p class="card-desc">Укладка плитки, ламинат, установка дверей. Опыт работы более 6 лет. Гарантия качества.</p>
-        </div>
-        <div class="card-footer">
-          <span style="font-size: 13px; color: var(--text-muted);">г. Назрань</span>
-          <button class="btn-rate" onclick="openRatingModal('Ибрагим М.')">Оценить</button>
-        </div>
-      </div>
-
-      <!-- Второй пример -->
-      <div class="user-card">
-        <div>
-          <div class="card-header">
-            <div class="card-title">ООО «СтройМаркет»</div>
-            <span class="card-role-tag">Работодатель</span>
-          </div>
-          <div class="card-rating">
-            <span class="star-icon">★</span>
-            <span>5.0</span>
-            <span style="color: var(--text-muted); font-weight: 400; font-size: 13px;">(8 отзывов)</span>
-          </div>
-          <p class="card-desc">Требуется кладовщик на склад строительных материалов. График 5/2, своевременная оплата.</p>
-        </div>
-        <div class="card-footer">
-          <span style="font-size: 13px; color: var(--text-muted);">г. Магас</span>
-          <button class="btn-rate" onclick="openRatingModal('ООО «СтройМаркет»')">Оценить</button>
-        </div>
-      </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h2 class="section-title" style="margin-bottom: 0;">Свежие объявления</h2>
+      <button class="btn-primary" onclick="handlePublishClick()">+ Опубликовать объявление</button>
     </div>
+    
+    <!-- Сетка объявлений -->
+    <div class="cards-grid" id="cardsGrid"></div>
 
-    <!-- Состояние, когда нужно опубликовать объявление -->
-    <div class="empty-state">
+    <!-- Пустое состояние -->
+    <div class="empty-state" id="emptyState" style="display: none;">
       <div class="empty-icon">📢</div>
-      <h3 class="empty-title">Хотите разместить свое объявление?</h3>
-      <p class="empty-subtitle">Авторизуйтесь через Telegram, чтобы опубликовать анкету или вакансию и получать оценки от клиентов.</p>
-      <button class="btn-primary" onclick="openAuthModal()">Опубликовать объявление</button>
+      <h3 class="empty-title">Объявлений пока нет</h3>
+      <p class="empty-subtitle">Будьте первым! Опубликуйте объявление о поиске работы или сотрудника.</p>
+      <button class="btn-primary" onclick="handlePublishClick()">Опубликовать объявление</button>
     </div>
   </main>
 
   <!-- Подвал -->
   <footer>
-    <p>© 2026 MARKET.ING — Сервис поиска работы и специалистов в Ингушетии.</p>
+    <p>© 2026 MARKET.ING — Сервис поиска работы в Ингушетии.</p>
   </footer>
 
   <!-- Модальное окно авторизации -->
   <div id="authModal" class="modal-overlay" onclick="handleOverlayClick(event, 'authModal')">
     <div class="modal-card">
-      <button class="close-btn" onclick="closeAuthModal()">&times;</button>
+      <button class="close-btn" onclick="closeModal('authModal')">&times;</button>
       <h2 class="modal-title">Вход в MARKET.ING</h2>
       <p class="modal-desc">Выберите роль для входа в систему</p>
 
@@ -658,134 +610,183 @@
       </button>
 
       <div id="authStatus" class="status-text"></div>
+
+      <!-- Поле для мобильных пользователей на случай другой сети -->
+      <div class="server-setting">
+        <label>Сервер Node (авто-определение):</label>
+        <input type="text" id="serverHostInput" class="form-control" style="padding: 6px; font-size: 12px; margin-top: 4px;" placeholder="http://192.168.x.x:3000">
+      </div>
     </div>
   </div>
 
-  <!-- Модальное окно системы рейтинга и отзывов -->
-  <div id="ratingModal" class="modal-overlay" onclick="handleOverlayClick(event, 'ratingModal')">
+  <!-- Модальное окно создания объявления -->
+  <div id="createAdModal" class="modal-overlay" onclick="handleOverlayClick(event, 'createAdModal')">
     <div class="modal-card">
-      <button class="close-btn" onclick="closeRatingModal()">&times;</button>
-      <h2 class="modal-title" id="ratingTargetName">Оставить отзыв</h2>
-      <p class="modal-desc">Оцените качество работы или сотрудничества</p>
+      <button class="close-btn" onclick="closeModal('createAdModal')">&times;</button>
+      <h2 class="modal-title">Новое объявление</h2>
+      <p class="modal-desc">Заполните детали вашего объявления</p>
 
-      <div class="star-rating-select">
-        <input type="radio" id="star5" name="rating" value="5" checked><label for="star5">★</label>
-        <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
-        <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
-        <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
-        <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+      <form onsubmit="submitAd(event)">
+        <div class="form-group">
+          <label>Заголовок *</label>
+          <input type="text" id="adTitle" class="form-control" placeholder="Например: Мастер по укладке плитки" required>
+        </div>
+
+        <div class="form-group">
+          <label>Категория / Специальность *</label>
+          <input type="text" id="adCategory" class="form-control" placeholder="Строительство, Водитель, Продавец..." required>
+        </div>
+
+        <div class="form-group">
+          <label>Город *</label>
+          <input type="text" id="adCity" class="form-control" placeholder="Назрань, Магас, Карабулак..." required>
+        </div>
+
+        <div class="form-group">
+          <label>Оплата / Оклад</label>
+          <input type="text" id="adPrice" class="form-control" placeholder="Например: 3 000 руб./день или Договорная">
+        </div>
+
+        <div class="form-group">
+          <label>Номер телефона для связи *</label>
+          <input type="tel" id="adPhone" class="form-control" placeholder="+7 (928) 000-00-00" required>
+        </div>
+
+        <div class="form-group">
+          <label>Описание *</label>
+          <textarea id="adDesc" class="form-control" rows="4" placeholder="Опишите подробности работы или опыт..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 14px;">Опубликовать</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Модальное окно просмотра объявления (с телефоном) -->
+  <div id="viewAdModal" class="modal-overlay" onclick="handleOverlayClick(event, 'viewAdModal')">
+    <div class="modal-card">
+      <button class="close-btn" onclick="closeModal('viewAdModal')">&times;</button>
+      <div id="viewAdCategory" class="card-role-tag" style="display: inline-block; margin-bottom: 10px;"></div>
+      <h2 id="viewAdTitle" class="modal-title" style="text-align: left;"></h2>
+      <p id="viewAdPrice" class="card-price" style="font-size: 20px; margin: 10px 0;"></p>
+      
+      <p id="viewAdCity" style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;"></p>
+
+      <div class="form-group">
+        <label>Описание:</label>
+        <p id="viewAdDesc" style="font-size: 15px; line-height: 1.6; color: #334155; white-space: pre-wrap;"></p>
       </div>
 
-      <textarea id="reviewComment" class="review-textarea" placeholder="Напишите краткий отзыв (необязательно)..."></textarea>
+      <div class="phone-box">
+        <div style="font-size: 13px; color: var(--text-muted);">Телефон для связи:</div>
+        <a id="viewAdPhone" class="phone-number" href="#"></a>
+      </div>
 
-      <button class="btn-primary" style="width: 100%;" onclick="submitRating()">Отправить оценку</button>
-      <div id="ratingStatus" class="status-text"></div>
+      <div style="font-size: 13px; color: var(--text-muted); text-align: right;" id="viewAdAuthor"></div>
     </div>
   </div>
 
   <script>
     const BOT_USERNAME = 'caucasusjob_bot';
-    const BACKEND_URL = 'http://localhost:3000';
-    let checkInterval = null;
+    
+    // Авто-определение IP для телефона в локальной сети
+    const defaultHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+      ? 'http://localhost:3000' 
+      : `http://${window.location.hostname}:3000`;
 
-    // Проверка сохраненной авторизации при загрузке страницы
+    let checkInterval = null;
+    let currentUser = null;
+    let adsList = [];
+
     window.onload = () => {
+      document.getElementById('serverHostInput').value = localStorage.getItem('marketing_server') || defaultHost;
+      
+      // Читаем профиль
       const savedUser = localStorage.getItem('marketing_user');
       if (savedUser) {
-        applyUserAuth(JSON.parse(savedUser));
+        currentUser = JSON.parse(savedUser);
+        applyUserAuth(currentUser);
       }
+
+      // Загружаем сохраненные объявления
+      const savedAds = localStorage.getItem('marketing_ads');
+      if (savedAds) {
+        adsList = JSON.parse(savedAds);
+      }
+
+      renderAds();
     };
 
-    function openAuthModal() {
-      const modal = document.getElementById('authModal');
-      modal.style.display = 'flex';
-      setTimeout(() => modal.classList.add('active'), 10);
-    }
-
-    function closeAuthModal() {
-      const modal = document.getElementById('authModal');
-      modal.classList.remove('active');
-      if (checkInterval) clearInterval(checkInterval);
-      setTimeout(() => {
-        modal.style.display = 'none';
-        document.getElementById('authStatus').innerHTML = '';
-      }, 300);
-    }
-
-    function handleOverlayClick(event, modalId) {
-      if (event.target.id === modalId) {
-        if (modalId === 'authModal') closeAuthModal();
-        if (modalId === 'ratingModal') closeRatingModal();
+    function getBackendUrl() {
+      const inputVal = document.getElementById('serverHostInput').value.trim();
+      if (inputVal) {
+        localStorage.setItem('marketing_server', inputVal);
+        return inputVal.replace(/\/$/, "");
       }
+      return defaultHost;
     }
 
-    async function startTelegramAuth() {
+    /* Авторизация */
+    function openAuthModal() {
+      openModal('authModal');
+    }
+
+    function startTelegramAuth() {
       const sessionCode = 'sess_' + Math.random().toString(36).substring(2, 10);
       const statusDiv = document.getElementById('authStatus');
+      const backendUrl = getBackendUrl();
 
       statusDiv.innerHTML = '<span style="color: var(--primary);">⏳ Создание сессии...</span>';
 
-      try {
-        // 1. Создаем сессию на бэкенде
-        const res = await fetch(`${BACKEND_URL}/api/create-session`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sessionCode })
-        });
-
+      fetch(`${backendUrl}/api/create-session`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionCode })
+      })
+      .then(res => {
         if (!res.ok) throw new Error('Ошибка сервера');
-
         statusDiv.innerHTML = '<span style="color: var(--primary);">✅ Переход в Telegram...</span>';
+        
+        window.open(`https://t.me/${BOT_USERNAME}?start=${sessionCode}`, '_blank');
 
-        // 2. Открываем бота в новом окне
-        const telegramUrl = `https://t.me/${BOT_USERNAME}?start=${sessionCode}`;
-        window.open(telegramUrl, '_blank');
-
-        // 3. Запускаем регулярный опрос
         if (checkInterval) clearInterval(checkInterval);
 
-        checkInterval = setInterval(async () => {
-          try {
-            const checkRes = await fetch(`${BACKEND_URL}/api/check-auth/${sessionCode}`);
-            const data = await checkRes.json();
+        checkInterval = setInterval(() => {
+          fetch(`${backendUrl}/api/check-auth/${sessionCode}`)
+            .then(r => r.json())
+            .then(data => {
+              if (data.verified) {
+                clearInterval(checkInterval);
+                const role = document.querySelector('input[name="userRole"]:checked').value;
+                const roleName = role === 'jobseeker' ? 'Соискатель' : 'Работодатель';
 
-            if (data.verified) {
-              clearInterval(checkInterval);
-              const role = document.querySelector('input[name="userRole"]:checked').value;
-              const roleName = role === 'jobseeker' ? 'Соискатель' : 'Работодатель';
+                currentUser = {
+                  name: data.name,
+                  phone: data.phone,
+                  role: roleName
+                };
 
-              const userObj = {
-                name: data.name,
-                phone: data.phone,
-                role: roleName,
-                rating: '5.0'
-              };
+                localStorage.setItem('marketing_user', JSON.stringify(currentUser));
+                statusDiv.innerHTML = '<span style="color: #2e7d32;">🎉 Авторизация успешна!</span>';
 
-              // Сохраняем в браузер
-              localStorage.setItem('marketing_user', JSON.stringify(userObj));
-
-              statusDiv.innerHTML = '<span style="color: #2e7d32;">🎉 Авторизация успешна!</span>';
-
-              setTimeout(() => {
-                applyUserAuth(userObj);
-                closeAuthModal();
-              }, 800);
-            }
-          } catch (err) {
-            console.error('Ошибка проверки статуса:', err);
-          }
+                setTimeout(() => {
+                  applyUserAuth(currentUser);
+                  closeModal('authModal');
+                }, 800);
+              }
+            })
+            .catch(err => console.error(err));
         }, 2000);
-
-      } catch (err) {
-        statusDiv.innerHTML = '<span style="color: #d32f2f;">❌ Ошибка соединения с node server.js</span>';
-      }
+      })
+      .catch(err => {
+        statusDiv.innerHTML = `<span style="color: #d32f2f;">❌ Не удалось подключиться к ${backendUrl}<br><small>Если заходите с телефона, укажите IP компьютера в поле ниже.</small></span>`;
+      });
     }
 
     function applyUserAuth(user) {
       document.getElementById('authBtn').style.display = 'none';
       const userBadge = document.getElementById('userBadge');
       document.getElementById('userName').innerText = `${user.name} (${user.role})`;
-      document.getElementById('userRatingVal').innerText = user.rating || '5.0';
       userBadge.style.display = 'flex';
     }
 
@@ -794,39 +795,137 @@
       location.reload();
     }
 
-    /* Модальное окно рейтинга */
-    function openRatingModal(name) {
-      const savedUser = localStorage.getItem('marketing_user');
-      if (!savedUser) {
+    /* Обработка кнопки «Опубликовать объявление» */
+    function handlePublishClick() {
+      if (!currentUser) {
         openAuthModal();
+      } else {
+        // Подставляем телефон пользователя по умолчанию
+        if (currentUser.phone) {
+          document.getElementById('adPhone').value = currentUser.phone;
+        }
+        openModal('createAdModal');
+      }
+    }
+
+    /* Создание и сохранение объявления */
+    function submitAd(event) {
+      event.preventDefault();
+
+      const newAd = {
+        id: Date.now(),
+        title: document.getElementById('adTitle').value,
+        category: document.getElementById('adCategory').value,
+        city: document.getElementById('adCity').value,
+        price: document.getElementById('adPrice').value || 'Договорная',
+        phone: document.getElementById('adPhone').value,
+        desc: document.getElementById('adDesc').value,
+        author: currentUser ? currentUser.name : 'Пользователь',
+        role: currentUser ? currentUser.role : ''
+      };
+
+      adsList.unshift(newAd);
+      localStorage.setItem('marketing_ads', JSON.stringify(adsList));
+
+      // Сброс формы
+      event.target.reset();
+      closeModal('createAdModal');
+      renderAds();
+    }
+
+    /* Отображение объявлений */
+    function renderAds(filterText = '') {
+      const grid = document.getElementById('cardsGrid');
+      const emptyState = document.getElementById('emptyState');
+      grid.innerHTML = '';
+
+      const filtered = adsList.filter(ad => 
+        ad.title.toLowerCase().includes(filterText.toLowerCase()) ||
+        ad.category.toLowerCase().includes(filterText.toLowerCase()) ||
+        ad.city.toLowerCase().includes(filterText.toLowerCase())
+      );
+
+      if (filtered.length === 0) {
+        emptyState.style.display = 'block';
         return;
       }
 
-      document.getElementById('ratingTargetName').innerText = `Оценка: ${name}`;
-      const modal = document.getElementById('ratingModal');
+      emptyState.style.display = 'none';
+
+      filtered.forEach(ad => {
+        const card = document.createElement('div');
+        card.className = 'user-card';
+        card.onclick = () => openViewAdModal(ad.id);
+
+        card.innerHTML = `
+          <div>
+            <div class="card-header">
+              <div class="card-title">${escapeHtml(ad.title)}</div>
+              <span class="card-role-tag">${escapeHtml(ad.category)}</span>
+            </div>
+            <div class="card-price">${escapeHtml(ad.price)}</div>
+            <p class="card-desc">${escapeHtml(ad.desc)}</p>
+          </div>
+          <div class="card-footer">
+            <span style="font-size: 13px; color: var(--text-muted);">📍 ${escapeHtml(ad.city)}</span>
+            <span style="font-size: 13px; color: var(--primary); font-weight: 600;">Просмотреть →</span>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    /* Просмотр конкретного объявления с телефоном */
+    function openViewAdModal(adId) {
+      const ad = adsList.find(item => item.id === adId);
+      if (!ad) return;
+
+      document.getElementById('viewAdTitle').innerText = ad.title;
+      document.getElementById('viewAdCategory').innerText = ad.category;
+      document.getElementById('viewAdPrice').innerText = ad.price;
+      document.getElementById('viewAdCity').innerText = `📍 г. ${ad.city}`;
+      document.getElementById('viewAdDesc').innerText = ad.desc;
+      
+      const phoneElem = document.getElementById('viewAdPhone');
+      phoneElem.innerText = ad.phone;
+      phoneElem.href = `tel:${ad.phone.replace(/[^0-9+]/g, '')}`;
+
+      document.getElementById('viewAdAuthor').innerText = `Разместил: ${ad.author} (${ad.role})`;
+
+      openModal('viewAdModal');
+    }
+
+    function filterAds() {
+      const query = document.getElementById('searchInput').value;
+      renderAds(query);
+    }
+
+    /* Вспомогательные функции модалок */
+    function openModal(id) {
+      const modal = document.getElementById(id);
       modal.style.display = 'flex';
       setTimeout(() => modal.classList.add('active'), 10);
     }
 
-    function closeRatingModal() {
-      const modal = document.getElementById('ratingModal');
+    function closeModal(id) {
+      const modal = document.getElementById(id);
       modal.classList.remove('active');
+      if (checkInterval) clearInterval(checkInterval);
       setTimeout(() => {
         modal.style.display = 'none';
-        document.getElementById('ratingStatus').innerHTML = '';
-        document.getElementById('reviewComment').value = '';
       }, 300);
     }
 
-    function submitRating() {
-      const rating = document.querySelector('input[name="rating"]:checked').value;
-      const statusDiv = document.getElementById('ratingStatus');
+    function handleOverlayClick(event, modalId) {
+      if (event.target.id === modalId) {
+        closeModal(modalId);
+      }
+    }
 
-      statusDiv.innerHTML = `<span style="color: #2e7d32;">Спасибо! Ваша оценка (${rating} ★) сохранена.</span>`;
-
-      setTimeout(() => {
-        closeRatingModal();
-      }, 1200);
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
     }
   </script>
 </body>
