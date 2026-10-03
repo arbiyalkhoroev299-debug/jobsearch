@@ -3,161 +3,438 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Работа06 — Поиск работы и вакансий в Ингушетии</title>
+  <title>MARKET.ING — Работа и персонал в Ингушетии</title>
   <style>
+    :root {
+      --primary: #0066FF;
+      --primary-hover: #0052CC;
+      --bg-light: #F4F7FA;
+      --text-main: #1A202C;
+      --text-muted: #718096;
+      --card-bg: #FFFFFF;
+      --border-color: #E2E8F0;
+      --transition-fast: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
-      background-color: #f4f6f8;
-      color: #333;
-      padding: 20px;
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
+    /* Шапка сайта */
     header {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .header-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      max-width: 900px;
-      margin: 0 auto 30px auto;
-      padding: 15px 20px;
-      background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
     .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #0088cc;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      transition: var(--transition-fast);
     }
 
-    .btn-main {
-      background-color: #0088cc;
+    .logo:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .logo span {
+      color: var(--text-main);
+    }
+
+    .user-profile-badge {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background-color: #EBF5FF;
+      padding: 8px 16px;
+      border-radius: 20px;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 14px;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
       color: #ffffff;
       border: none;
-      padding: 10px 20px;
+      padding: 10px 22px;
       font-size: 15px;
       font-weight: 600;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: var(--transition-fast);
+      box-shadow: 0 2px 8px rgba(0, 102, 255, 0.2);
     }
 
-    .btn-main:hover {
-      background-color: #006699;
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0, 102, 255, 0.3);
     }
 
-    /* Модальное окно */
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    /* Главный баннер / Поиск */
+    .hero-section {
+      background: linear-gradient(135deg, #0066FF 0%, #0040A8 100%);
+      color: #ffffff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .hero-container {
+      max-width: 800px;
+      margin: 0 auto;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .hero-title {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+
+    .search-box {
+      background: #ffffff;
+      padding: 8px;
+      border-radius: 12px;
+      display: flex;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      flex-wrap: wrap;
+      transition: var(--transition-fast);
+    }
+
+    .search-box:focus-within {
+      box-shadow: 0 12px 30px rgba(0, 102, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      border: none;
+      padding: 14px 18px;
+      font-size: 16px;
+      outline: none;
+      border-radius: 8px;
+    }
+
+    .search-btn {
+      background-color: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .search-btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    /* Основной контент */
+    main {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      flex: 1;
+      width: 100%;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
+
+    /* Блок отсутствия карточек */
+    .empty-state {
+      background: var(--card-bg);
+      border: 2px dashed var(--border-color);
+      border-radius: 16px;
+      padding: 50px 20px;
+      text-align: center;
+      transition: var(--transition-fast);
+    }
+
+    .empty-state:hover {
+      border-color: var(--primary);
+      background-color: #FAF9FF;
+    }
+
+    .empty-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: inline-block;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .empty-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .empty-subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 450px;
+      margin: 0 auto 24px auto;
+    }
+
+    /* Модальное окно авторизации */
     .modal-overlay {
-      display: none; /* Скрыто по умолчанию */
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
       z-index: 1000;
       align-items: center;
       justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
     }
 
     .modal-card {
-      background-color: #ffffff;
-      padding: 30px;
-      border-radius: 12px;
+      background-color: var(--card-bg);
+      padding: 32px;
+      border-radius: 16px;
       width: 90%;
       max-width: 420px;
       position: relative;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      transform: translateY(20px);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
     }
 
     .close-btn {
       position: absolute;
-      top: 15px;
+      top: 20px;
       right: 20px;
-      font-size: 26px;
-      font-weight: bold;
-      color: #aaa;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-muted);
       cursor: pointer;
+      border: none;
+      background: none;
+      transition: var(--transition-fast);
     }
 
-    .close-btn:hover {
-      color: #333;
+    .close-btn:hover { 
+      color: var(--text-main); 
+      transform: rotate(90deg);
     }
 
     .modal-title {
-      font-size: 20px;
-      margin-bottom: 15px;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
       text-align: center;
     }
 
+    .modal-desc {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
     .role-options {
-      margin: 20px 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
+      margin-bottom: 24px;
     }
 
     .role-label {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
       cursor: pointer;
+      font-weight: 600;
       font-size: 15px;
+      transition: var(--transition-fast);
     }
 
     .role-label:hover {
-      border-color: #0088cc;
-      background-color: #f0f8ff;
+      border-color: var(--primary);
+      background-color: #F8FAFC;
+      transform: translateX(4px);
+    }
+
+    .role-label input[type="radio"] {
+      accent-color: var(--primary);
+      width: 18px;
+      height: 18px;
     }
 
     .btn-telegram {
       width: 100%;
       background-color: #24A1DE;
-      color: #fff;
+      color: #ffffff;
       border: none;
       padding: 14px;
       font-size: 16px;
-      font-weight: bold;
-      border-radius: 8px;
+      font-weight: 700;
+      border-radius: 10px;
       cursor: pointer;
-      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: var(--transition-fast);
+      box-shadow: 0 4px 12px rgba(36, 161, 222, 0.25);
     }
 
     .btn-telegram:hover {
-      background-color: #1d88be;
+      background-color: #1D88BE;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(36, 161, 222, 0.35);
     }
 
     .status-text {
-      margin-top: 15px;
+      margin-top: 16px;
       font-size: 14px;
       text-align: center;
-      color: #666;
+      color: var(--text-muted);
+      min-height: 20px;
+      transition: var(--transition-fast);
+    }
+
+    /* Анимации keyframes */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.08); opacity: 1; }
+    }
+
+    /* Подвал */
+    footer {
+      background-color: var(--card-bg);
+      border-top: 1px solid var(--border-color);
+      padding: 24px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: auto;
     }
   </style>
 </head>
 <body>
 
+  <!-- Шапка сайта -->
   <header>
-    <div class="logo">Работа06</div>
-    <button class="btn-main" onclick="openAuthModal()">Войти / Регистрация</button>
+    <div class="header-container">
+      <a href="#" class="logo">MARKET<span>.ING</span></a>
+      
+      <div id="userBadge" class="user-profile-badge">
+        👤 <span id="userName">Пользователь</span>
+      </div>
+
+      <button id="authBtn" class="btn-primary" onclick="openAuthModal()">Войти / Регистрация</button>
+    </div>
   </header>
 
-  <!-- Модальное окно авторизации -->
-  <div id="authModal" class="modal-overlay">
-    <div class="modal-card">
-      <span class="close-btn" onclick="closeAuthModal()">&times;</span>
-      <h2 class="modal-title">Авторизация</h2>
+  <!-- Главный баннер -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <h1 class="hero-title">Найдите работу или сотрудника в Ингушетии</h1>
+      <p class="hero-subtitle">Единая бесплатная платформа для поиска вакансий и специалистов</p>
+      
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="Должность, профессия или услуга...">
+        <button class="search-btn">Найти</button>
+      </div>
+    </div>
+  </section>
 
-      <p style="text-align: center; color: #666; font-size: 14px;">Выберите, кто вы:</p>
+  <!-- Основной блок -->
+  <main>
+    <h2 class="section-title">Свежие объявления</h2>
+    
+    <!-- Состояние, когда объявлений еще нет -->
+    <div class="empty-state">
+      <div class="empty-icon">📢</div>
+      <h3 class="empty-title">Объявлений пока нет</h3>
+      <p class="empty-subtitle">Авторизуйтесь через Telegram, чтобы опубликовать первое объявление о поиске работы или сотрудника.</p>
+      <button class="btn-primary" onclick="openAuthModal()">Опубликовать объявление</button>
+    </div>
+  </main>
+
+  <!-- Подвал -->
+  <footer>
+    <p>© 2026 MARKET.ING — Сервис поиска работы в Ингушетии. Все права защищены.</p>
+  </footer>
+
+  <!-- Модальное окно авторизации -->
+  <div id="authModal" class="modal-overlay" onclick="handleOverlayClick(event)">
+    <div class="modal-card">
+      <button class="close-btn" onclick="closeAuthModal()">&times;</button>
+      <h2 class="modal-title">Вход в MARKET.ING</h2>
+      <p class="modal-desc">Выберите роль для входа в систему</p>
 
       <div class="role-options">
         <label class="role-label">
@@ -166,12 +443,12 @@
         </label>
         <label class="role-label">
           <input type="radio" name="userRole" value="employer">
-          <span>💼 Работодатель (ищу сотрудника)</span>
+          <span>💼 Работодатель (ищу сотрудников)</span>
         </label>
       </div>
 
       <button class="btn-telegram" onclick="startTelegramAuth()">
-        📱 Подтвердить в Telegram
+        📱 Подтвердить через Telegram
       </button>
 
       <div id="authStatus" class="status-text"></div>
@@ -179,31 +456,44 @@
   </div>
 
   <script>
-    const BOT_USERNAME = 'caucasusjob_bot'; // Точное имя твоего бота
-    const BACKEND_URL = 'http://localhost:3000'; // Сервер на порту 3000
+    const BOT_USERNAME = 'caucasusjob_bot';
+    const BACKEND_URL = 'http://localhost:3000';
     let checkInterval = null;
 
     function openAuthModal() {
-      document.getElementById('authModal').style.display = 'flex';
+      const modal = document.getElementById('authModal');
+      modal.style.display = 'flex';
+      // Задержка для плавной анимации появления
+      setTimeout(() => modal.classList.add('active'), 10);
     }
 
     function closeAuthModal() {
-      document.getElementById('authModal').style.display = 'none';
+      const modal = document.getElementById('authModal');
+      modal.classList.remove('active');
+      
       if (checkInterval) clearInterval(checkInterval);
+      
+      setTimeout(() => {
+        modal.style.display = 'none';
+        document.getElementById('authStatus').innerHTML = '';
+      }, 300);
+    }
+
+    function handleOverlayClick(event) {
+      if (event.target.id === 'authModal') {
+        closeAuthModal();
+      }
     }
 
     function startTelegramAuth() {
-      // 1. Генерируем уникальный код сессии
       const sessionCode = 'sess_' + Math.random().toString(36).substring(2, 10);
       const statusDiv = document.getElementById('authStatus');
 
-      statusDiv.innerHTML = '⏳ Ожидаем подтверждения в Telegram...';
+      statusDiv.innerHTML = '<span style="animation: pulse 1s infinite display: inline-block;">⏳ Ожидаем подтверждения в Telegram...</span>';
 
-      // 2. Открываем бота с параметром deep linking
       const telegramUrl = `https://t.me/${BOT_USERNAME}?start=${sessionCode}`;
       window.open(telegramUrl, '_blank');
 
-      // 3. Каждые 2 секунды опрашиваем наш сервер
       if (checkInterval) clearInterval(checkInterval);
 
       checkInterval = setInterval(async () => {
@@ -214,13 +504,18 @@
           if (data.verified) {
             clearInterval(checkInterval);
             const role = document.querySelector('input[name="userRole"]:checked').value;
+            const roleName = role === 'jobseeker' ? 'Соискатель' : 'Работодатель';
 
-            statusDiv.innerHTML = '✅ Успешно! Вы вошли как: ' + (role === 'jobseeker' ? 'Соискатель' : 'Работодатель');
+            statusDiv.innerHTML = '✅ Успешно! Авторизация пройдена.';
 
             setTimeout(() => {
-              alert(`Добро пожаловать, ${data.name}! Ваш номер: ${data.phone}`);
+              document.getElementById('authBtn').style.display = 'none';
+              const userBadge = document.getElementById('userBadge');
+              document.getElementById('userName').innerText = `${data.name} (${roleName})`;
+              userBadge.style.display = 'flex';
+
               closeAuthModal();
-            }, 1000);
+            }, 800);
           }
         } catch (err) {
           console.error('Ошибка проверки авторизации:', err);
